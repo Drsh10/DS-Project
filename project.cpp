@@ -188,3 +188,37 @@ ParcelNode* searchByWeight(ParcelNode* root, int weight)
         return searchByWeight(root->right, weight);
     }
 }
+
+
+//
+// FUNCTION:FindMin
+//DESCRIPTION:
+// Function  is created to find Minimum value of Weight node in BST
+//PARAMETERS: ParcelNode* root
+// RETURNS: ParcelNode* (the node with the minimum weight)
+//
+ParcelNode* findMin(ParcelNode* root)
+{
+    while (root->left != NULL)
+    {
+        root = root->left;
+    }
+    return root;
+}
+
+//
+// FUNCTION:FindMax
+//DESCRIPTION:
+// Function  is created to find Minimum value of Weight node in BST
+//PARAMETERS: ParcelNode* root
+//
+ParcelNode* findMax(ParcelNode* root)
+{
+    // Traverse the tree to the leftmost node, which has the minimum weight
+    while (root->right != NULL)
+    {
+        root = root->right;
+    }
+    // Return the leftmost node, which contains the minimum weight
+    return root;
+}
