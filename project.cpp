@@ -323,3 +323,24 @@ void displayParcelsByWeight(ParcelNode* root, int weight, int higher)
     }
     displayParcelsByWeight(higher ? root->left : root->right, weight, higher);
 }
+//
+// FUNCTION:calculateTotals
+//DESCRIPTION:
+// Function is created to calculate the total amount of the parcels of the Particular Company
+//PARAMETERS: ParcelNode* root, int* totalWeight, float* totalValuation
+//
+void calculateTotals(ParcelNode* root, int* totalWeight, float* totalValuation)
+{
+    // If the current node is not NULL, calculate totals
+    if (root != NULL)
+    {
+        // Add the current node's weight to the total weight
+        *totalWeight += root->weight;
+        // Add the current node's valuation to the total valuation
+        *totalValuation += root->valuation;
+        // Recursively calculate totals for the left subtree
+        calculateTotals(root->left, totalWeight, totalValuation);
+        // Recursively calculate totals for the right subtree
+        calculateTotals(root->right, totalWeight, totalValuation);
+    }
+}
