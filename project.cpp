@@ -254,3 +254,34 @@ ParcelNode* findMinValuation(ParcelNode* root)
 
     return minNode;
 }
+//
+// FUNCTION:findMaxValuation
+//DESCRIPTION:
+// Function  is created to find Minimum value of Valuation node in BST
+//PARAMETERS: ParcelNode* root
+// RETURNS: ParcelNode* (the node with the maximum valuation)
+//
+ParcelNode* findMaxValuation(ParcelNode* root) {
+    // If the tree is empty, return NULL
+    if (root == NULL) {
+        return NULL;
+    }
+
+    ParcelNode* maxNode = root;
+
+    // Recursively find the maximum valuation in the left subtree
+    ParcelNode* leftMax = findMaxValuation(root->left);
+    // Update maxNode if a larger valuation is found in the left subtree
+    if (leftMax != NULL && leftMax->valuation > maxNode->valuation) {
+        maxNode = leftMax;
+    }
+
+    // Recursively find the maximum valuation in the right subtree
+    ParcelNode* rightMax = findMaxValuation(root->right);
+    // Update maxNode if a larger valuation is found in the right subtree
+    if (rightMax != NULL && rightMax->valuation > maxNode->valuation) {
+        maxNode = rightMax;
+    }
+
+    return maxNode;
+}
