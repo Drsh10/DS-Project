@@ -493,3 +493,42 @@ void displayMenu(HashTable* hashTable)
         }
     } while (choice != 6);  // Continue the loop until the user chooses to exit
 }
+//
+// FUNCTION:freeBST
+//DESCRIPTION:
+// Function  created to Free tge memory of the Binary Seach tree
+//PARAMETERS: ParcelNode* root
+//
+void freeBST(ParcelNode* root)
+{
+    if (root != NULL)
+    {
+        // Recursively free the left subtree
+        freeBST(root->left);
+        // Recursively free the right subtree
+        freeBST(root->right);
+        // Free the memory allocated for the destination string
+        free(root->destination);
+        // Free the memory allocated for the current node
+        free(root);
+    }
+}
+//
+// FUNCTION: freeHashTable
+//DESCRIPTION:
+// Function  created to Free the memory of the Hash Table
+//PARAMETERS: HashTable* hashTable
+//
+void freeHashTable(HashTable* hashTable)
+{
+    // Iterate through all buckets in the hash table
+    for (int i = 0; i < 127; i++)
+    {
+        // Check if there are nodes in the current bucket
+        if (hashTable->buckets[i] != NULL)
+        {
+            // Free the memory of the binary search tree in the current bucket
+            freeBST(hashTable->buckets[i]);
+        }
+    }
+}
