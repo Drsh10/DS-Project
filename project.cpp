@@ -344,3 +344,152 @@ void calculateTotals(ParcelNode* root, int* totalWeight, float* totalValuation)
         calculateTotals(root->right, totalWeight, totalValuation);
     }
 }
+
+//
+// FUNCTION:displayMenu
+//DESCRIPTION:
+// Function  is created to to display the menu for the the user to Select the Choice ans for various opeartion
+//PARAMETERS: HashTable* hashTable
+//
+void displayMenu(HashTable* hashTable)
+{
+    int choice;
+    int weight;
+    int higher;
+    char country[20];
+    ParcelNode* node;
+    do
+    {
+        printf("\nMenu:\n");
+        printf("1. Enter country name and display all parcels\n");
+        printf("2. Enter country and weight pair\n");
+        printf("3. Display total parcel load and valuation for the country\n");
+        printf("4. Display cheapest and most expensive parcel details\n");
+        printf("5. Display lightest and heaviest parcel for the country\n");
+        printf("6. Exit\n");
+        printf("Enter your choice: ");
+        // Read the user's choice
+        scanf_s("%d", &choice);
+        // Process the user's choice using a switch statement
+        switch (choice)
+        {
+        case 1:
+            // Option 1: Display all parcels for a given country
+            printf("Enter country name: ");
+            scanf_s("%s", country, 20);
+            // Get the ParcelNode list for the country using a hash function
+            node = hashTable->buckets[hash_djb2(country)];
+            // Check if there are parcels for the entered country
+            if (node != NULL && strcmp(node->destination, country) == 0)
+            {
+                displayParcels(node);
+            }
+            else
+            {
+                printf("No parcels found for %s.\n", country);
+            }
+            break;
+        case 2:
+            // Option 2: Enter country and weight pair, then filter parcels by weight
+            printf("Enter country name: ");
+            scanf_s("%s", country, 20);
+            printf("Enter weight: ");
+            scanf_s("%d", &weight);
+            if (weight < 100 || weight > 50000)
+            {
+                printf("Error: Invalid weight value.\n");
+                break;
+            }
+            // Display options to filter parcels based on weight
+            printf("1. Display parcels heavier than %d g\n", weight);
+            printf("2. Display parcels lighter than %d g\n", weight);
+            printf("Enter your choice: ");
+            scanf_s("%d", &higher);
+            // Get the ParcelNode list for the country using a hash function
+            node = hashTable->buckets[hash_djb2(country)];
+            // Check if there are parcels for the entered country
+            if (node != NULL && strcmp(node->destination, country) == 0)
+            {
+                displayParcelsByWeight(node, weight, higher == 1);
+            }
+            else
+            {
+                // Display parcels based on the weight condition
+                printf("No parcels found for %s.\n", country);
+            }
+            break;
+        case 3:
+            // Option 3: Display total weight and valuation for a given country
+            printf("Enter country name: ");
+            scanf_s("%s", country, 20);
+            // Get the ParcelNode list for the country using a hash function
+            node = hashTable->buckets[hash_djb2(country)];
+            // Check if there are parcels for the entered country
+            if (node != NULL && strcmp(node->destination, country) == 0)
+            {
+                int totalWeight = 0;
+                float totalValuation = 0.0;
+                // Calculate totals for the parcels
+                calculateTotals(node, &totalWeight, &totalValuation);
+                printf("Total weight: %d g, Total valuation: $%.2f\n", totalWeight, totalValuation);
+            }
+            else
+            {
+                printf("No parcels found for %s.\n", country);
+            }
+            break;
+        case 4:
+            // Option 4: Display cheapest and most expensive parcel details
+            printf("Enter country name: ");
+            scanf_s("%s", country, 20);
+            // Get the ParcelNode list for the country using a hash function
+            node = hashTable->buckets[hash_djb2(country)];
+            // Check if there are parcels for the entered country
+            if (node != NULL && strcmp(node->destination, country) == 0)
+            {
+                // Find the cheapest and most expensive parcels
+                ParcelNode* minNode = findMinValuation(node);
+                ParcelNode* maxNode = findMaxValuation(node);
+                // Display the details of the cheapest parcel
+                printf("Cheapest Parcel: Destination: %s, Weight: %d g, Valuation: $%.2f\n", minNode->destination, minNode->weight, minNode->valuation);
+                // Display the details of the most expensive parcel
+                printf("Most Expensive Parcel: Destination: %s, Weight: %d g, Valuation: $%.2f\n", maxNode->destination, maxNode->weight, maxNode->valuation);
+            }
+            else
+            {
+                printf("No parcels found for %s.\n", country);
+            }
+            break;
+        case 5:
+            // Option 5: Display lightest and heaviest parcel details
+            printf("Enter country name: ");
+            scanf_s("%s", country, 20);
+            // Get the ParcelNode list for the country using a hash function
+            node = hashTable->buckets[hash_djb2(country)];
+            // Check if there are parcels for the entered country
+            if (node != NULL && strcmp(node->destination, country) == 0)
+            {
+                // Find the lightest and heaviest parcels
+                ParcelNode* minNode = findMin(node);
+                ParcelNode* maxNode = findMax(node);
+                // Display the details of the lightest parcel
+                printf("Lightest Parcel: Destination: %s, Weight: %d g, Valuation: $%.2f\n", minNode->destination, minNode->weight, minNode->valuation);
+                // Display the details of the heaviest parcel
+                printf("Heaviest Parcel: Destination: %s, Weight: %d g, Valuation: $%.2f\n", maxNode->destination, maxNode->weight, maxNode->valuation);
+                printf("No parcels found for %s.\n", country);
+            }
+            else
+            {
+                printf("No parcels found for %s.\n", country);
+            }
+            break;
+        case 6:
+            // Option 6: Exit the menu
+            printf("Exiting...\n");
+            break;
+        default:
+            // Handle invalid menu choices
+            printf("Invalid choice! Please try again.\n");
+        }
+    } while (choice != 6);  // Continue the loop until the user chooses to exit
+}
