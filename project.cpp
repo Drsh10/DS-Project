@@ -1,3 +1,11 @@
+/*
+*  FILE: Project.cpp
+*  PROJECT       : SENG1050 - Group-Project
+*  PROGRAMMER    : Darsh Patel & Rachit Patel
+*  FIRST VERSION : 12-08-2024
+*  DESCRIPTION   :
+*    THIS PROGRAM USE TREE DATA STRUCTURE TO MANAGE VARIOUS PRODUCT AND DISPLAY OUTPUT BASED ON SPECIFIC REQUIREMENTS.
+*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
