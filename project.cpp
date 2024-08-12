@@ -285,3 +285,23 @@ ParcelNode* findMaxValuation(ParcelNode* root) {
 
     return maxNode;
 }
+//
+// FUNCTION:displayParcels
+//DESCRIPTION:
+// Function  is created to display all the parcles of particular company
+//PARAMETERS: ParcelNode* root
+//
+void displayParcels(ParcelNode* root)
+{
+    // If the current node is not NULL, perform an in-order traversal
+
+    if (root != NULL)
+    {
+        // Recursively display parcels in the left subtree
+        displayParcels(root->left);
+        // Print the current node's parcel information
+        printf("Destination: %s, Weight: %d g, Valuation: $%.2f\n", root->destination, root->weight, root->valuation);
+        // Recursively display parcels in the right subtree
+        displayParcels(root->right);
+    }
+}
