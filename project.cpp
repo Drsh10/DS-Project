@@ -305,3 +305,21 @@ void displayParcels(ParcelNode* root)
         displayParcels(root->right);
     }
 }
+//
+// FUNCTION:displayParcelsByWeight
+//DESCRIPTION:
+// Function is created To display the Parcel by it Weight 
+//PARAMETERS: ParcelNode* root, int weight, int higher
+void displayParcelsByWeight(ParcelNode* root, int weight, int higher)
+{
+    if (root == NULL)
+    {
+        return;
+    }
+    displayParcelsByWeight(higher ? root->right : root->left, weight, higher);
+    if ((higher && root->weight > weight) || (!higher && root->weight < weight))
+    {
+        printf("Destination: %s, Weight: %d g, Valuation: $%.2f\n", root->destination, root->weight, root->valuation);
+    }
+    displayParcelsByWeight(higher ? root->left : root->right, weight, higher);
+}
