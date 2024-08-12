@@ -222,3 +222,35 @@ ParcelNode* findMax(ParcelNode* root)
     // Return the leftmost node, which contains the minimum weight
     return root;
 }
+//
+// FUNCTION:findMinValuation
+//DESCRIPTION:
+// Function  is created to find Minimum value of Valuation node in BST
+//PARAMETERS: ParcelNode* root
+// RETURNS: ParcelNode* (the node with the minimum valuation)
+//
+ParcelNode* findMinValuation(ParcelNode* root)
+{
+    // If the tree is empty, return NULL
+    if (root == NULL)
+    {
+        return NULL;
+    }
+    // Assume the current node is the minimum
+    ParcelNode* minNode = root;
+
+    // Recursively find the minimum valuation in the left subtree
+    ParcelNode* leftMin = findMinValuation(root->left);
+    // Update minNode if a smaller valuation is found in the left subtree
+    if (leftMin != NULL && leftMin->valuation < minNode->valuation) {
+        minNode = leftMin;
+    }
+    // Recursively find the minimum valuation in the right subtree
+    ParcelNode* rightMin = findMinValuation(root->right);
+    // Update minNode if a smaller valuation is found in the right subtree
+    if (rightMin != NULL && rightMin->valuation < minNode->valuation) {
+        minNode = rightMin;
+    }
+
+    return minNode;
+}
