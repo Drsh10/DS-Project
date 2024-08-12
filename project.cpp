@@ -119,3 +119,47 @@ ParcelNode* createParcelNode(const char* destination, int weight, float valuatio
 
     return newNode;
 }
+
+//
+// FUNCTION:insertParcelNode
+//DESCRIPTION:
+// Function  created to  insert a parcel node into the Binary Search Tree
+//PARAMETERS: ParcelNode* root, char* destination, int weight, float valuation
+// Returns: the function returns the root of the tree, which represents the top of the binary search tree
+//
+ParcelNode* insertParcelNode(ParcelNode* root, char* destination, int weight, float valuation)
+{
+    // If the tree is empty, create a new node as the root
+    if (root == NULL)
+    {
+        return createParcelNode(destination, weight, valuation);
+    }
+    // If the weight of the new parcel is less than the current node's weight,
+    // insert the new node in the left subtree
+    if (weight < root->weight)
+    {
+        root->left = insertParcelNode(root->left, destination, weight, valuation);
+    }
+    // If the weight of the new parcel is greater than or equal to the current node's weight,
+    // insert the new node in the right subtree
+    else
+    {
+        root->right = insertParcelNode(root->right, destination, weight, valuation);
+    }
+    return root;
+}
+
+//
+// FUNCTION:insertParcel
+//DESCRIPTION:
+// Function is created to insert the parcel into a hash table
+//PARAMETERS: HashTable* hashTable, char* destination, int weight, float valuation
+//
+void insertParcel(HashTable* hashTable, char* destination, int weight, float valuation)
+{
+    // Calculate the index in the hash table using a hash function on the destination string
+    unsigned long index = hash_djb2(destination);
+
+    // Insert the parcel node into the binary search tree located at  index
+    hashTable->buckets[index] = insertParcelNode(hashTable->buckets[index], destination, weight, valuation);
+}
