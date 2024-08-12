@@ -163,3 +163,28 @@ void insertParcel(HashTable* hashTable, char* destination, int weight, float val
     // Insert the parcel node into the binary search tree located at  index
     hashTable->buckets[index] = insertParcelNode(hashTable->buckets[index], destination, weight, valuation);
 }
+//
+// FUNCTION: searchByWeight
+// DESCRIPTION:
+//   Function to find a parcel node by its weight in a binary search tree
+// PARAMETERS: ParcelNode* root, int weight
+// RETURNS: ParcelNode* (the found node or NULL if not found)
+//
+ParcelNode* searchByWeight(ParcelNode* root, int weight)
+{
+    // If the current node is NULL or its weight matches the searched weight, return the node
+    if (root == NULL || root->weight == weight)
+    {
+        return root;
+    }
+    // If the searched weight is less than the current node's weight, search in the left subtree
+    if (weight < root->weight)
+    {
+        return searchByWeight(root->left, weight);
+    }
+    // If the searched weight is greater than the current node's weight, search in the right subtree
+    else
+    {
+        return searchByWeight(root->right, weight);
+    }
+}
